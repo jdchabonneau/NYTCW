@@ -1,59 +1,156 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'dart:math';
 
 void main() {
   runApp(MyApp());
 }
 
 class NYCWGrid extends StatelessWidget {
+  int numRows, numCols;
+  NYCWGrid(this.numRows, this.numCols);
   @override
   Widget build(BuildContext context) {
-    return aa1(3, 3);
+    //return aa1(3, 3);
+    return drawGrid();
     // Text("NYCWGrid");
   }
 
+  Widget drawGrid() {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: List.generate(numRows, (index) {
+          return makeRow(index);
+        }));
+  }
+
+  Row makeRow(int rowID) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: List.generate(numCols, (index) {
+        return NYCWSq(rowID, index);
+      }),
+    );
+  }
+
   Widget aa2() {
-    return Card(
-      child: InkWell(
-        splashColor: Colors.blue.withAlpha(30),
-        onTap: () {
-          print('Card tapped.');
-        },
-        child: Container(),
+    return Container(
+      child: Card(
+        child: InkWell(
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () {
+            print('Card tapped.');
+          },
+          child: Row(
+            children: [
+              Container(
+                width: 25,
+                height: 15,
+                color: Colors.cyan,
+              ),
+              Container(
+                width: 25,
+                height: 15,
+                color: Colors.pink,
+              ),
+              Container(
+                width: 25,
+                height: 15,
+                color: Colors.red,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget aa1(int numCols, int numRows) {
-    return Container(
-      height: 400,
-      child: GridView.count(
-          crossAxisCount: numCols,
-          children: List.generate(numCols * numRows, (index) {
-            print("index: " + index.toString());
-            //eturn Text("index: " + index.toString());
-            return InkWell(
-              splashColor: Colors.blue.withAlpha(30),
-              onTap: () {
-                print('Card tapped.');
-              },
-              child: Container(
-                width: 15,
-                height: 15,
-                child: Card(
-                  color: Colors.pink,
-                ),
+  Widget aa1(int numCols, int rowID) {
+    return GridView.count(
+        crossAxisCount: numCols,
+        children: List.generate(numCols * numRows, (index) {
+          print("index: " + index.toString());
+          //eturn Text("index: " + index.toString());
+          return InkWell(
+            child: Container(
+              width: 15,
+              height: 15,
+              child: Card(
+                color: Colors.pink,
               ),
-            );
-          })),
-    );
+            ),
+          );
+        }));
   }
 }
 
-class NYCWSq extends StatelessWidget {
+class NYCWSq extends StatefulWidget {
+  static final squares = List<NYCWSq>();
+  static Color normalColor = Colors.yellow;
+  static Color unusedColor = Colors.black;
+  static Color selectedColor = Colors.deepOrange;
+  static Color selectedRowColor = Colors.deepOrangeAccent;
+  int rowID, colId;
+  bool isSelected = false;
+
+  String displayChar = "P";
+
+  NYCWSq(this.rowID, this.colId) {
+    squares.add(this);
+  }
+
+  @override
+  _NYCWSqState createState() => _NYCWSqState();
+}
+
+class _NYCWSqState extends State<NYCWSq> {
+  Color c = NYCWSq.normalColor;
+
+  final _chars = 'ABCDEGFHIJKLMNO';
+
+  Random _rnd = Random();
+
+  String getRandomString(int length) => _rnd.nextBool()
+      ? ""
+      : String.fromCharCodes(Iterable.generate(
+          length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
   @override
   Widget build(BuildContext context) {
-    return Text("ppp");
+    //Color c;
+    //c = computeColor(c);
+    return InkWell(
+      splashColor: Colors.blue.withAlpha(30),
+      onTap: () {
+        print('Card tapped.');
+        for (var s in NYCWSq.squares) {
+          s.isSelected = (s == widget);
+          c = (s.isSelected == true)
+              ? NYCWSq.selectedColor
+              : NYCWSq.normalColor;
+        }
+      },
+      child: Container(
+          color: c,
+          height: 40.0,
+          width: 60.0,
+          child: Center(child: Text(widget.displayChar))),
+    );
+  }
+
+  //Color computeColor(Color c) {}
+
+  Color computeColor2(Color c) {
+    int r = _rnd.nextInt(100);
+    r < 10
+        ? c = NYCWSq.unusedColor
+        : r < 15
+            ? c = NYCWSq.selectedColor
+            : r < 30
+                ? c = NYCWSq.selectedRowColor
+                : c = NYCWSq.normalColor;
+    return c;
   }
 }
 
@@ -64,19 +161,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -150,7 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            NYCWGrid(),
+            NYCWGrid(7, 5),
             Text(
               'You have rushed the button this many times:',
             ),
