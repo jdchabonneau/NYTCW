@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'dart:math';
+import 'NYCWSq.dart';
+import 'CWKB.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,124 +35,55 @@ class NYCWGrid extends StatelessWidget {
     );
   }
 
-  Widget aa2() {
-    return Container(
-      child: Card(
-        child: InkWell(
-          splashColor: Colors.blue.withAlpha(30),
-          onTap: () {
-            print('Card tapped.');
-          },
-          child: Row(
-            children: [
-              Container(
-                width: 25,
-                height: 15,
-                color: Colors.cyan,
-              ),
-              Container(
-                width: 25,
-                height: 15,
-                color: Colors.pink,
-              ),
-              Container(
-                width: 25,
-                height: 15,
-                color: Colors.red,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget aa2() {
+  //   return Container(
+  //     child: Card(
+  //       child: InkWell(
+  //         splashColor: Colors.blue.withAlpha(30),
+  //         onTap: () {
+  //           print('Card tapped.');
+  //         },
+  //         child: Row(
+  //           children: [
+  //             Container(
+  //               width: 25,
+  //               height: 15,
+  //               color: Colors.cyan,
+  //             ),
+  //             Container(
+  //               width: 25,
+  //               height: 15,
+  //               color: Colors.pink,
+  //             ),
+  //             Container(
+  //               width: 25,
+  //               height: 15,
+  //               color: Colors.red,
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget aa1(int numCols, int rowID) {
-    return GridView.count(
-        crossAxisCount: numCols,
-        children: List.generate(numCols * numRows, (index) {
-          print("index: " + index.toString());
-          //eturn Text("index: " + index.toString());
-          return InkWell(
-            child: Container(
-              width: 15,
-              height: 15,
-              child: Card(
-                color: Colors.pink,
-              ),
-            ),
-          );
-        }));
-  }
-}
-
-class NYCWSq extends StatefulWidget {
-  static final squares = List<NYCWSq>();
-  static Color normalColor = Colors.yellow;
-  static Color unusedColor = Colors.black;
-  static Color selectedColor = Colors.deepOrange;
-  static Color selectedRowColor = Colors.deepOrangeAccent;
-  int rowID, colId;
-  bool isSelected = false;
-
-  String displayChar = "P";
-
-  NYCWSq(this.rowID, this.colId) {
-    squares.add(this);
-  }
-
-  @override
-  _NYCWSqState createState() => _NYCWSqState();
-}
-
-class _NYCWSqState extends State<NYCWSq> {
-  Color c = NYCWSq.normalColor;
-
-  final _chars = 'ABCDEGFHIJKLMNO';
-
-  Random _rnd = Random();
-
-  String getRandomString(int length) => _rnd.nextBool()
-      ? ""
-      : String.fromCharCodes(Iterable.generate(
-          length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-
-  @override
-  Widget build(BuildContext context) {
-    //Color c;
-    //c = computeColor(c);
-    return InkWell(
-      splashColor: Colors.blue.withAlpha(30),
-      onTap: () {
-        print('Card tapped.');
-        for (var s in NYCWSq.squares) {
-          s.isSelected = (s == widget);
-          c = (s.isSelected == true)
-              ? NYCWSq.selectedColor
-              : NYCWSq.normalColor;
-        }
-      },
-      child: Container(
-          color: c,
-          height: 40.0,
-          width: 60.0,
-          child: Center(child: Text(widget.displayChar))),
-    );
-  }
-
-  //Color computeColor(Color c) {}
-
-  Color computeColor2(Color c) {
-    int r = _rnd.nextInt(100);
-    r < 10
-        ? c = NYCWSq.unusedColor
-        : r < 15
-            ? c = NYCWSq.selectedColor
-            : r < 30
-                ? c = NYCWSq.selectedRowColor
-                : c = NYCWSq.normalColor;
-    return c;
-  }
+  // Widget aa1(int numCols, int rowID) {
+  //   return GridView.count(
+  //       crossAxisCount: numCols,
+  //       children: List.generate(numCols * numRows, (index) {
+  //         print("index: " + index.toString());
+  //         //eturn Text("index: " + index.toString());
+  //         return InkWell(
+  //           child: Container(
+  //             width: 15,
+  //             height: 15,
+  //             child: Card(
+  //               color: Colors.pink,
+  //             ),
+  //           ),
+  //         );
+  //       }));
+  // }
 }
 
 class MyApp extends StatelessWidget {
@@ -188,7 +120,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  //int _counter = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -197,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+      //_counter++;
     });
   }
 
@@ -234,16 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            NYCWGrid(7, 5),
-            Text(
-              'You have rushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          children: <Widget>[NYCWGrid(6, 5), CWKB()],
         ),
       ),
       floatingActionButton: FloatingActionButton(
