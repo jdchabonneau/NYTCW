@@ -1,89 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'NYCWSq.dart';
+import 'NYCWGrid.dart';
 import 'CWKB.dart';
 
 void main() {
   runApp(MyApp());
-}
-
-class NYCWGrid extends StatelessWidget {
-  int numRows, numCols;
-  NYCWGrid(this.numRows, this.numCols);
-  @override
-  Widget build(BuildContext context) {
-    //return aa1(3, 3);
-    return drawGrid();
-    // Text("NYCWGrid");
-  }
-
-  Widget drawGrid() {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(numRows, (index) {
-          return makeRow(index);
-        }));
-  }
-
-  Row makeRow(int rowID) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: List.generate(numCols, (index) {
-        return NYCWSq(rowID, index);
-      }),
-    );
-  }
-
-  // Widget aa2() {
-  //   return Container(
-  //     child: Card(
-  //       child: InkWell(
-  //         splashColor: Colors.blue.withAlpha(30),
-  //         onTap: () {
-  //           print('Card tapped.');
-  //         },
-  //         child: Row(
-  //           children: [
-  //             Container(
-  //               width: 25,
-  //               height: 15,
-  //               color: Colors.cyan,
-  //             ),
-  //             Container(
-  //               width: 25,
-  //               height: 15,
-  //               color: Colors.pink,
-  //             ),
-  //             Container(
-  //               width: 25,
-  //               height: 15,
-  //               color: Colors.red,
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // Widget aa1(int numCols, int rowID) {
-  //   return GridView.count(
-  //       crossAxisCount: numCols,
-  //       children: List.generate(numCols * numRows, (index) {
-  //         print("index: " + index.toString());
-  //         //eturn Text("index: " + index.toString());
-  //         return InkWell(
-  //           child: Container(
-  //             width: 15,
-  //             height: 15,
-  //             child: Card(
-  //               color: Colors.pink,
-  //             ),
-  //           ),
-  //         );
-  //       }));
-  // }
 }
 
 class MyApp extends StatelessWidget {

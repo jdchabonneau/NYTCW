@@ -6,13 +6,16 @@ class NYCWSq extends StatefulWidget {
   static Color unusedColor = Colors.black;
   static Color selectedColor = Colors.deepOrange;
   static Color selectedRowColor = Colors.deepOrangeAccent;
-  int rowID, colId;
+  final int rowId;
+  final int colId;
   bool isSelected = false;
   Color c = NYCWSq.normalColor;
 
   String displayChar = "A";
 
-  NYCWSq(this.rowID, this.colId) {
+  NYCWSq(this.rowId, this.colId) {
+    print("--cstr-- + ${this.rowId} - ${this.colId}");
+
     squares.add(this);
   }
 
@@ -35,16 +38,16 @@ class _NYCWSqState extends State<NYCWSq> {
     //Color c;
     //c = computeColor(c);
 
-    print("Build");
+    //print("Build");
     return InkWell(
       splashColor: Colors.blue.withAlpha(30),
       onTap: () {
-        print('Card tapped.' + NYCWSq.squares.length.toString());
-        int n = 0;
+//        print('Card tapped.' + NYCWSq.squares.length.toString());
+        //int n = 0;
         for (var s in NYCWSq.squares) {
-          n++;
+          //n++;
           // print("n:" + (n++).toString());
-          colorSquares(s, n);
+          colorSquares(s, widget);
         }
       },
       child: Container(
@@ -55,38 +58,22 @@ class _NYCWSqState extends State<NYCWSq> {
     );
   }
 
-  void colorSquares(NYCWSq s, int n) {
+  void colorSquares(NYCWSq s, NYCWSq tappedSquare) {
+    print(
+        "** ${widget.rowId} - ${widget.colId} % ${s.rowId} - ${s.colId} % ${tappedSquare.rowId} - ${tappedSquare.colId}");
+
     setState(() {
-      print("c");
       s.isSelected = (s == widget);
       if (s.isSelected) {
-        print("----if--" + n.toString());
+        print("----if-- + ${widget.rowId} - ${widget.colId}");
 
-        s.displayChar = "C";
+        s.displayChar = s.displayChar == "D" ? "B" : "D";
         s.c = NYCWSq.selectedColor;
-        //c = Colors.amber;
-//      c = (s.isSelected == true) ? NYCWSq.selectedColor : NYCWSq.normalColor;
-        //   aa(s, "1");
-        // } else {
-        //   aa(s, "2");
       } else {
-        print("--else--" + n.toString());
-        s.displayChar = "B";
+        print("----else-- + ${widget.rowId} - ${widget.colId}");
+        s.displayChar = "X";
         s.c = NYCWSq.normalColor;
-        //c = Colors.red;
       }
     });
   }
-
-  // Color computeColor2(Color c) {
-  //   int r = _rnd.nextInt(100);
-  //   r < 10
-  //       ? c = NYCWSq.unusedColor
-  //       : r < 15
-  //           ? c = NYCWSq.selectedColor
-  //           : r < 30
-  //               ? c = NYCWSq.selectedRowColor
-  //               : c = NYCWSq.normalColor;
-  //   return c;
-  // }
 }
