@@ -19,6 +19,11 @@ class NYCWSq extends StatefulWidget {
     squares.add(this);
   }
 
+  void jjj() {
+    print("**jjj: $rowId - $colId");
+  }
+//    setState
+
   @override
   _NYCWSqState createState() => _NYCWSqState();
 }
@@ -70,6 +75,7 @@ class _NYCWSqState extends State<NYCWSq> {
         s.displayChar = s.displayChar == "D" ? "B" : "D";
         s.c = NYCWSq.selectedColor;
       } else {
+        s.jjj();
         print("----else-- + ${widget.rowId} - ${widget.colId}");
         s.displayChar = "X";
         s.c = NYCWSq.normalColor;
