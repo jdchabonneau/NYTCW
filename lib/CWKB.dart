@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'NYCWSq.dart';
+
 class CWKB extends StatelessWidget {
   int ind;
   Widget keyRow(String s) {
@@ -12,6 +14,7 @@ class CWKB extends StatelessWidget {
           splashColor: Colors.blue.withAlpha(30),
           onTap: () {
             print(s[index]);
+            NYCWSq.changeDispChar(s[index]);
           },
           child: Container(
             decoration: const BoxDecoration(
