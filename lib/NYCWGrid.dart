@@ -23,7 +23,7 @@ class NYCWGrid extends StatelessWidget {
   Row makeRow(int rowID) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(numCols, (index) {
         return NYCWSq(rowID, index);
       }),

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -5,12 +7,12 @@ class NYCWSq extends StatefulWidget {
   static final squares = List<NYCWSq>();
   static bool doingRows = true;
 
-  static Color normalColor = Colors.yellow;
+  static Color normalColor = Colors.grey;
   static Color unusedColor = Colors.black;
-  static Color selectedColor = Colors.deepOrange;
-  static Color selectedRowColor = Colors.deepOrangeAccent;
+  static Color selectedColor = Colors.lightBlue;
+  static Color selectedRowColor = Colors.purple;
   static double width;
-  Function cb;
+  Function callBackSetState;
   Function cs;
   final int rowId;
   final int colId;
@@ -18,20 +20,29 @@ class NYCWSq extends StatefulWidget {
   bool isHilighted = false;
   bool isSelected = false;
   Color c = NYCWSq.normalColor;
+  String squareNumber = " ";
+  static int nextSquareNumber = 1;
 
-  String displayChar = "A";
+  String displayChar = "B";
 
   NYCWSq(this.rowId, this.colId) {
     squares.add(this);
     if (squares.length == 1) {
       this.isUnused = true;
     }
+    if (!this.isUnused) {
+      if (rowId == 0) {
+        squareNumber = (nextSquareNumber++).toString();
+      } else if (colId == 0) {
+        squareNumber = (nextSquareNumber++).toString();
+      }
+    }
   }
 
   static void selectSquare() {
     for (var s in NYCWSq.squares) {
       if (s.isSelected) {
-        s.cb();
+        s.callBackSetState();
       }
     }
   }
@@ -50,7 +61,7 @@ class NYCWSq extends StatefulWidget {
       previous = s;
 
       s.cs(s, null);
-      s.cb();
+      s.callBackSetState();
     }
     // int i = cb(9);
     // print("**jjj: $rowId - $colId, $i");
@@ -77,12 +88,13 @@ class _NYCWSqState extends State<NYCWSq> {
     //c = computeColor(c);
     NYCWSq.width =
 //        (MediaQuery.of(context).size.width / NYCWSq.squares.length).floor();
-        (MediaQuery.of(context).size.width / sqrt(NYCWSq.squares.length));
+        (MediaQuery.of(context).size.width /
+            (sqrt(NYCWSq.squares.length) + 1.5));
 //    double height = MediaQuery.of(context).size.height;
     widget.cs = (a, b) {
       colorSquares(a);
     };
-    widget.cb = () {
+    widget.callBackSetState = () {
       setState(() {});
     };
 
@@ -91,7 +103,7 @@ class _NYCWSqState extends State<NYCWSq> {
       splashColor: Colors.blue.withAlpha(30),
       onTap: () {
         print("w.x = ${widget.c}");
-        if (widget.c != NYCWSq.normalColor) {
+        if (widget.c == NYCWSq.selectedColor) {
           NYCWSq.doingRows = !NYCWSq.doingRows;
         }
 
@@ -108,9 +120,46 @@ class _NYCWSqState extends State<NYCWSq> {
       },
       child: Container(
           color: widget.c,
-          height: NYCWSq.width,
-          width: NYCWSq.width,
-          child: Center(child: Text(widget.displayChar))),
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(0),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                        height: NYCWSq.width * .35,
+                        width: NYCWSq.width,
+//                        child: Center(child: Text("2"))),
+                        child: Text(
+                          widget.squareNumber,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 12),
+                        )),
+                    Container(
+                        //color: Colors.blue,
+                        height: NYCWSq.width * .65,
+                        width: NYCWSq.width,
+                        child: Center(
+                            child: Text(
+                          widget.displayChar,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ))),
+                  ],
+                ),
+              ),
+            ],
+          )),
     );
   }
 
@@ -132,7 +181,7 @@ class _NYCWSqState extends State<NYCWSq> {
         s.isHilighted = false;
         //      print("no: ${s.colId}, ${s.rowId}");
       }
-      s.cb();
+      s.callBackSetState();
     }
     //  });
   }
@@ -143,7 +192,7 @@ class _NYCWSqState extends State<NYCWSq> {
       if (s.isUnused) {
         print("unused: ${s.colId}, ${s.rowId}");
         s.c = NYCWSq.unusedColor;
-        s.cb();
+        s.callBackSetState();
         continue;
       }
       if (s != selectedSquare) if (s.rowId == rowId) {
@@ -153,7 +202,7 @@ class _NYCWSqState extends State<NYCWSq> {
         s.c = NYCWSq.normalColor;
         //print("no: ${s.colId}, ${s.rowId}");
       }
-      s.cb();
+      s.callBackSetState();
     }
     //});
   }
