@@ -1,0 +1,5 @@
+risky;Ripe;Like cutting your own hair
+intro;First paragraph of a five paragraph essay
+plaid;stage
+eagle;Play ground?
+-well;Tiny food for the world's largest animal

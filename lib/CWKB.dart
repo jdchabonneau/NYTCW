@@ -2,6 +2,55 @@ import 'package:flutter/material.dart';
 
 import 'NYCWSq.dart';
 
+class CWHintBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+//    return Text("oo");
+    return Container(
+        height: 68,
+        width: MediaQuery.of(context).size.width * .8,
+        margin: EdgeInsets.all(12.0),
+        color: Colors.purple,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.arrow_left),
+                      tooltip: 'left',
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * .6,
+                    child: (Text(
+                      "aBobby stutters stutters stutters stutters stutters A aBobby stutters stutters stutters stutters stutters A aBobby stutters stutters stutters stutters stutters A stutters B stutters C stutters D stutters ",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                      style: TextStyle(
+                          //fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 15),
+                    )),
+                  ),
+                  Center(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.arrow_right),
+                      tooltip: 'left',
+                    ),
+                  )
+                ],
+              )
+            ]));
+  }
+}
+
 class CWKB extends StatelessWidget {
   int ind;
   Widget keyRow(String s) {

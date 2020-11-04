@@ -23,11 +23,14 @@ class NYCWSq extends StatefulWidget {
   String squareNumber = " ";
   static int nextSquareNumber = 1;
 
-  String displayChar = "B";
+  String displayChar = " ";
 
   NYCWSq(this.rowId, this.colId) {
     squares.add(this);
-    if (squares.length == 1) {
+    if (squares.length == 1 ||
+        squares.length == 5 ||
+        squares.length == 21 ||
+        squares.length == 25) {
       this.isUnused = true;
     }
     if (!this.isUnused) {
@@ -55,7 +58,7 @@ class NYCWSq extends StatefulWidget {
           inputChar = " ";
           s.isSelected = false;
           previous.isSelected = true;
-        }
+        } else {}
         s.displayChar = inputChar;
       }
       previous = s;
