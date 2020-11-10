@@ -3,6 +3,22 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+class ShapesPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+    // set the paint color to be white
+    paint.color = Colors.white;
+    // Create a rectangle with size and width same as the canvas
+    var rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    // draw the rectangle using the paint
+    canvas.drawRect(rect, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
 class NYCWSq extends StatefulWidget {
   static final squares = List<NYCWSq>();
   static bool doingRows = true;
@@ -16,6 +32,8 @@ class NYCWSq extends StatefulWidget {
   Function cs;
   final int rowId;
   final int colId;
+  bool isInError = false;
+  bool isExposed = false;
   bool isUnused = false;
   bool isHilighted = false;
   bool isSelected = false;
@@ -122,47 +140,49 @@ class _NYCWSqState extends State<NYCWSq> {
         }
       },
       child: Container(
-          color: widget.c,
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1,
+        child: Container(
+            color: widget.c,
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(0),
                   ),
-                  borderRadius: BorderRadius.circular(0),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                        height: NYCWSq.width * .35,
-                        width: NYCWSq.width,
+                  child: Column(
+                    children: [
+                      Container(
+                          height: NYCWSq.width * .35,
+                          width: NYCWSq.width,
 //                        child: Center(child: Text("2"))),
-                        child: Text(
-                          widget.squareNumber,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 12),
-                        )),
-                    Container(
-                        //color: Colors.blue,
-                        height: NYCWSq.width * .65,
-                        width: NYCWSq.width,
-                        child: Center(
-                            child: Text(
-                          widget.displayChar,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ))),
-                  ],
+                          child: Text(
+                            widget.squareNumber,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 12),
+                          )),
+                      Container(
+                          //color: Colors.blue,
+                          height: NYCWSq.width * .65,
+                          width: NYCWSq.width,
+                          child: Center(
+                              child: Text(
+                            widget.displayChar,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ))),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          )),
+              ],
+            )),
+      ),
     );
   }
 
