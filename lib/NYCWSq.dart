@@ -3,16 +3,27 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class ShapesPainter extends CustomPainter {
+class TrianglePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint();
-    // set the paint color to be white
+
+    paint.color = Colors.red;
+    // create a path
+    var path = Path();
+    // path.moveTo(size.width / 2, 0);
+    // path.lineTo(size.width / 2, size.height / 4);
+    // path.lineTo(size.width / 2 - size.height / 4, 0);
+    path.moveTo(size.width / 2, 0);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height / 2);
+    print("w:${size.width}, h:${size.height}");
+    // close the path to form a bounded shape
+    path.close();
+    canvas.drawPath(path, paint);
     paint.color = Colors.white;
-    // Create a rectangle with size and width same as the canvas
-    var rect = Rect.fromLTWH(0, 0, size.width, size.height);
-    // draw the rectangle using the paint
-    canvas.drawRect(rect, paint);
+    canvas.drawCircle(
+        Offset(size.width * 0.85, size.height * 0.15), 6.0, paint);
   }
 
   @override
@@ -37,11 +48,13 @@ class NYCWSq extends StatefulWidget {
   bool isUnused = false;
   bool isHilighted = false;
   bool isSelected = false;
+  bool wasExposed = true;
   Color c = NYCWSq.normalColor;
   String squareNumber = " ";
   static int nextSquareNumber = 1;
 
   String displayChar = " ";
+  String char = " ";
 
   NYCWSq(this.rowId, this.colId) {
     squares.add(this);
@@ -51,13 +64,40 @@ class NYCWSq extends StatefulWidget {
         squares.length == 25) {
       this.isUnused = true;
     }
-    if (!this.isUnused) {
-      if (rowId == 0) {
-        squareNumber = (nextSquareNumber++).toString();
-      } else if (colId == 0) {
-        squareNumber = (nextSquareNumber++).toString();
+    assignNumber();
+  }
+
+  void assignNumber() {
+    if (this.isUnused || this.squareNumber != " ") {
+      return;
+    }
+    if (topOfColumn()) {
+      squareNumber = (nextSquareNumber++).toString();
+      return;
+    }
+    if (startOfRow()) {
+      squareNumber = (nextSquareNumber++).toString();
+      return;
+    }
+  }
+
+  NYCWSq atRowCol(int rowId, int colId) {
+    for (var s in NYCWSq.squares) {
+      if (s.rowId == rowId && s.colId == colId) {
+        return s;
       }
     }
+    return null;
+  }
+
+  bool topOfColumn() {
+    if (this.rowId == 0) return true;
+    return atRowCol(rowId - 1, colId).isUnused;
+  }
+
+  bool startOfRow() {
+    if (this.colId == 0) return true;
+    return atRowCol(rowId, colId - 1).isUnused;
   }
 
   static void selectSquare() {
@@ -112,6 +152,7 @@ class _NYCWSqState extends State<NYCWSq> {
         (MediaQuery.of(context).size.width /
             (sqrt(NYCWSq.squares.length) + 1.5));
 //    double height = MediaQuery.of(context).size.height;
+    double ss = sqrt((NYCWSq.width * NYCWSq.width) * 1.8);
     widget.cs = (a, b) {
       colorSquares(a);
     };
@@ -139,49 +180,77 @@ class _NYCWSqState extends State<NYCWSq> {
           highlightColumn(widget.colId, widget);
         }
       },
-      child: Container(
-        child: Container(
-            color: widget.c,
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(0),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                          height: NYCWSq.width * .35,
-                          width: NYCWSq.width,
-//                        child: Center(child: Text("2"))),
-                          child: Text(
-                            widget.squareNumber,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 12),
-                          )),
-                      Container(
-                          //color: Colors.blue,
-                          height: NYCWSq.width * .65,
-                          width: NYCWSq.width,
-                          child: Center(
-                              child: Text(
-                            widget.displayChar,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ))),
-                    ],
-                  ),
+      child: Stack(
+        children: [
+          buildBox(),
+          widget.isInError && !widget.isUnused
+              ? diagonalStrikethrough(ss)
+              : Container(),
+          CustomPaint(
+            painter: TrianglePainter(),
+            child: Container(
+              height: NYCWSq.width,
+              width: NYCWSq.width,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container buildBox() {
+    return Container(
+        color: widget.c,
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 1,
                 ),
-              ],
-            )),
+                borderRadius: BorderRadius.circular(0),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                      height: NYCWSq.width * .35,
+                      width: NYCWSq.width,
+//                        child: Center(child: Text("2"))),
+                      child: Text(
+                        widget.squareNumber,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 12),
+                      )),
+                  Container(
+                      //color: Colors.blue,
+                      height: NYCWSq.width * .65,
+                      width: NYCWSq.width,
+                      child: Center(
+                          child: Text(
+                        widget.displayChar,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ))),
+                ],
+              ),
+            ),
+          ],
+        ));
+  }
+
+  Transform diagonalStrikethrough(double ss) {
+    return Transform.rotate(
+      origin: Offset(50, 30),
+      angle: -pi / 4,
+      child: Container(
+        color: Colors.red,
+        width: ss * .75,
+        height: 10,
       ),
     );
   }
