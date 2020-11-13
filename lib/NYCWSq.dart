@@ -44,11 +44,10 @@ class NYCWSq extends StatefulWidget {
   final int rowId;
   final int colId;
   bool isInError = false;
-  bool isExposed = false;
   bool isUnused = false;
   bool isHilighted = false;
   bool isSelected = false;
-  bool wasExposed = true;
+  bool wasExposed = false;
   Color c = NYCWSq.normalColor;
   String squareNumber = " ";
   static int nextSquareNumber = 1;
@@ -58,9 +57,15 @@ class NYCWSq extends StatefulWidget {
 
   NYCWSq(this.rowId, this.colId) {
     squares.add(this);
+    // if (squares.length == 1 ||
+    //     squares.length == 5 ||
+    //     squares.length == 21 ||
+    //     squares.length == 25) {
+    //   this.isUnused = true;
+    // }
     if (squares.length == 1 ||
-        squares.length == 5 ||
-        squares.length == 21 ||
+        squares.length == 2 ||
+        squares.length == 24 ||
         squares.length == 25) {
       this.isUnused = true;
     }
@@ -186,13 +191,15 @@ class _NYCWSqState extends State<NYCWSq> {
           widget.isInError && !widget.isUnused
               ? diagonalStrikethrough(ss)
               : Container(),
-          CustomPaint(
-            painter: TrianglePainter(),
-            child: Container(
-              height: NYCWSq.width,
-              width: NYCWSq.width,
-            ),
-          ),
+          widget.wasExposed && !widget.isUnused
+              ? CustomPaint(
+                  painter: TrianglePainter(),
+                  child: Container(
+                    height: NYCWSq.width,
+                    width: NYCWSq.width,
+                  ),
+                )
+              : Container(),
         ],
       ),
     );
@@ -222,20 +229,22 @@ class _NYCWSqState extends State<NYCWSq> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 12),
+                            fontSize: NYCWSq.width * .25),
                       )),
                   Container(
                       //color: Colors.blue,
                       height: NYCWSq.width * .65,
                       width: NYCWSq.width,
                       child: Center(
+                          heightFactor: 2.5,
                           child: Text(
-                        widget.displayChar,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ))),
+                            widget.displayChar,
+                            style: TextStyle(
+                                color: Colors.purple[100],
+                                fontWeight: FontWeight.bold,
+                                fontSize: NYCWSq.width * .65),
+                            textAlign: TextAlign.center,
+                          ))),
                 ],
               ),
             ),
