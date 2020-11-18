@@ -23,18 +23,19 @@
 // 7A:Atlantic or Pacific
 // 8A:Distinguished degree
 class D {
-  static String jjj() {
-    return ''' 
-##2 
-7X7
-1:bff-4:tab
-7:alibaba
-9:surebet
-10:--ego--
-11:drfauci
-15:moonlit
-16:vex-17:ins
-
+  static List<String> jjj() {
+    var s = ''' 
+^
+Info:Info goes here 
+^
+1:bff-4:tab;
+7:alibaba;
+9:surebet;
+10:--ego--;
+11:drfauci;
+15:moonlit;
+16:vex-17:ins;
+^
 1A:Lifelong pal
 1D:Some undergrad degrees
 2D:Reason for a seasonal shot
@@ -56,5 +57,10 @@ class D {
 16A:Irritate
 17A:Shoo___ (overwhelming favorites)
 ''';
+
+    var ss = s.split("^");
+//var ss = '''^abb**c**dead head'''.split("**");
+
+    return ss;
   }
 }

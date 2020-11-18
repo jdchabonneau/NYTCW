@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nytCW/CWFileReader.dart';
+// import 'package:nytCW/puzzles.dart';
 
 import 'NYCWGrid.dart';
 import 'CWKB.dart';
 
 void main() {
+//  D.jjj();
+  CWFileReader().parseFile("");
   runApp(MyApp());
 }
 
@@ -150,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   textColor: Colors.white,
                   fontSize: 16.0);
             },
-            child: new Text("Menu"),
+            child: new Text("xMenu"),
           ),
         ]),
       ),
