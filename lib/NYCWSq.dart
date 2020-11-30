@@ -55,7 +55,7 @@ class NYCWSq extends StatefulWidget {
   String displayChar = " ";
   String char = " ";
 
-  NYCWSq(this.rowId, this.colId) {
+  NYCWSq(this.rowId, this.colId, this.isUnused, this.char) {
     squares.add(this);
     // if (squares.length == 1 ||
     //     squares.length == 5 ||
@@ -63,13 +63,9 @@ class NYCWSq extends StatefulWidget {
     //     squares.length == 25) {
     //   this.isUnused = true;
     // }
-    if (squares.length == 1 ||
-        squares.length == 2 ||
-        squares.length == 24 ||
-        squares.length == 25) {
-      this.isUnused = true;
-    }
+
     assignNumber();
+    this.displayChar = this.char;
   }
 
   void assignNumber() {
@@ -169,7 +165,7 @@ class _NYCWSqState extends State<NYCWSq> {
     return InkWell(
       splashColor: Colors.blue.withAlpha(30),
       onTap: () {
-        print("w.x = ${widget.c}");
+        //print("w.x = ${widget.c}");
         if (widget.c == NYCWSq.selectedColor) {
           NYCWSq.doingRows = !NYCWSq.doingRows;
         }
@@ -291,7 +287,7 @@ class _NYCWSqState extends State<NYCWSq> {
 //    setState(() {
     for (var s in NYCWSq.squares) {
       if (s.isUnused) {
-        print("unused: ${s.colId}, ${s.rowId}");
+        // print("unused: ${s.colId}, ${s.rowId}");
         s.c = NYCWSq.unusedColor;
         s.callBackSetState();
         continue;

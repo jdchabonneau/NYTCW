@@ -64,3 +64,32 @@ Info:Info goes here
     return ss;
   }
 }
+
+class E {
+  static List<String> jjj() {
+    var s = ''' 
+^
+Info:Info goes here 
+^
+1:abcd;
+5:efgh;
+6:ijkl;
+7:mnop;
+^
+1A:Lifelong pal
+1D:Some undergrad degrees
+2D:Reason for a seasonal shot
+3D:Alternative to Chrome or Safari
+4A:Father on "The Marvelous Mrs. Maisel"
+5A:Dracula's other form
+6A:China's largest e-commerece company
+7A:Started
+8A:Wager that can't miss
+''';
+
+    var ss = s.split("^");
+//var ss = '''^abb**c**dead head'''.split("**");
+
+    return ss;
+  }
+}

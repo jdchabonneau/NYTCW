@@ -9,8 +9,9 @@ import 'CWKB.dart';
 
 void main() {
 //  D.jjj();
-  CWFileReader().parseFile("");
-  runApp(MyApp());
+  LL().doIt();
+  // CWFileReader().buildPuzzle();
+  // runApp(MyApp());
 }
 
 class CustomPopupMenu {
