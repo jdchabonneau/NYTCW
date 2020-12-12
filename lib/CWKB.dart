@@ -21,15 +21,18 @@ class CWHintBar extends StatelessWidget {
                 children: [
                   Center(
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print("Lefty!");
+                      },
                       icon: Icon(Icons.arrow_left),
                       tooltip: 'left',
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * .6,
+                    width: MediaQuery.of(context).size.width * .55,
                     child: (Text(
-                      "aBobby stutters stutters stutters stutters stutters A aBobby stutters stutters stutters stutters stutters A aBobby stutters stutters stutters stutters stutters A stutters B stutters C stutters D stutters ",
+//                      "aBobby stutters stutters stutters stutters stutters A aBobby stutters stutters stutters stutters stutters A aBobby stutters stutters stutters stutters stutters A stutters B stutters C stutters D stutters ",
+                      "aBubby A aBoutters stutters stutters",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
                       style: TextStyle(
@@ -40,9 +43,11 @@ class CWHintBar extends StatelessWidget {
                   ),
                   Center(
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print("Righty!");
+                      },
                       icon: Icon(Icons.arrow_right),
-                      tooltip: 'left',
+                      tooltip: 'right',
                     ),
                   )
                 ],

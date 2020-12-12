@@ -8,10 +8,10 @@ import 'NYCWGrid.dart';
 import 'CWKB.dart';
 
 void main() {
-//  D.jjj();
-  LL().doIt();
-  // CWFileReader().buildPuzzle();
-  // runApp(MyApp());
+  // D.jjj();
+  // LL().doIt();
+  //CWFileReader().buildPuzzle();
+  runApp(MyApp());
 }
 
 class CustomPopupMenu {
@@ -136,6 +136,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var nn = CWFileReader();
+    nn.parseFile("");
     return Scaffold(
       appBar: AppBar(
         title:
@@ -162,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[NYCWGrid(5, 5), CWHintBar(), CWKB()],
+          children: <Widget>[NYCWGrid(4, 4), CWHintBar(), CWKB()],
         ),
       ),
       // floatingActionButton: FloatingActionButton(

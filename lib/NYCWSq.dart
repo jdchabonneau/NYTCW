@@ -64,7 +64,12 @@ class NYCWSq extends StatefulWidget {
     //   this.isUnused = true;
     // }
 
-    assignNumber();
+    try {
+      assignNumber();
+    } on Exception catch (e) {
+      print(e);
+      // TODO
+    }
     this.displayChar = this.char;
   }
 
@@ -83,17 +88,26 @@ class NYCWSq extends StatefulWidget {
   }
 
   NYCWSq atRowCol(int rowId, int colId) {
+    var ss = "";
+    print("atRowCol($rowId, $colId) -- length=${squares.length}");
+    for (var s in NYCWSq.squares) {
+      ss += ("[${s.rowId}, ${s.colId}]");
+    }
+    print(ss);
     for (var s in NYCWSq.squares) {
       if (s.rowId == rowId && s.colId == colId) {
         return s;
       }
     }
-    return null;
+    return NYCWSq.squares[0];
+    //return null;
   }
 
   bool topOfColumn() {
     if (this.rowId == 0) return true;
-    return atRowCol(rowId - 1, colId).isUnused;
+    var jj = atRowCol(rowId - 1, colId);
+    return jj.isUnused;
+//    return atRowCol(rowId - 1, colId).isUnused;
   }
 
   bool startOfRow() {
