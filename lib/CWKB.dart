@@ -59,7 +59,7 @@ class CWHintBar extends StatelessWidget {
 class CWKB extends StatelessWidget {
   int ind;
   Widget keyRow(String s) {
-    List<Widget> l = List();
+    List<Widget> l = List<Widget>();
     s = s.toUpperCase();
     List.generate(
       s.length,

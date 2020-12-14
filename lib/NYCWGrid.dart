@@ -79,7 +79,8 @@ class NYCWGrid extends StatelessWidget {
 //        print(
         //          "NYCWSq(rowID=$rowID, index=$index, z =${v.isUnused}, ${v.char})");
         //return Text("abc d-");
-        return NYCWSq(rowID, index, true, c);
+        return NYCWSq.squares[rowID * 4 + index];
+        //return NYCWSq(rowID, index, true, c);
       }),
     );
   }

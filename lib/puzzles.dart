@@ -35,7 +35,7 @@ Info:Info goes here
 11:drfauci;
 15:moonlit;
 16:vex-17:ins;
-^
+^6
 1A:Lifelong pal
 1D:Some undergrad degrees
 2D:Reason for a seasonal shot
@@ -71,11 +71,10 @@ class E {
 ^
 Info:Info goes here 
 ^
-1:abcd;
-5:efgh;
-6:ijkl;
-7:mnop;
-^
+1:Love;
+5:oven;
+6:veku;
+7:enuf;
 1A:Lifelong pal
 1D:Some undergrad degrees
 2D:Reason for a seasonal shot

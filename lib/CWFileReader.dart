@@ -36,7 +36,7 @@ class CWFileReader {
   }
 
   void parseFile(String pathToFile) {
-    List<String> ss = E.jjj();
+    List<String> ss = D.jjj();
 //    var i = ss.length;
 //    var s1 = ss[0];
 //    var s2 = ss[1];
@@ -47,10 +47,10 @@ class CWFileReader {
 
     parseWords(words2);
     parseHints(hintSection);
-    int i = 0;
-    for (var square in NYCWSq.squares) {
-      print("${i++}: ${square.rowId} - ${square.colId} '${square.char}'");
-    }
+    // int i = 0;
+    // for (var square in NYCWSq.squares) {
+    //   print("${i++}: ${square.rowId} - ${square.colId} '${square.char}'");
+    // }
     //buildPuzzle();
   }
 
@@ -59,18 +59,20 @@ class CWFileReader {
     List<String> lines = ls.convert(hintsSection);
     //var hints = lines.split(":");
     print("lines.length= ${lines.length}");
-    // var i = 0;
+    var i = 0;
     for (var line in lines) {
-      if (line.length == 2) {
-        //var h = line.split(":");
+      var h = line.split(":");
+      if (h.length == 2) {
         //   print("hint: ${h.length} - $h[0]");
-        // print("hint2: ${++i} - ${h[0]} ${h[1]}");
+        print("hint2: ${++i} - ${h[0]} ${h[1]}");
+        definitions[h[0]] = h[1];
       }
     }
   }
 
   void parseWords(List<String> words2) {
     NYCWSq.squares.clear();
+    NYCWSq.nextSquareNumber = 1;
     for (var lineInfo in words2) {
       var xx = lineInfo.split(":");
       // var acrossWords;
@@ -87,7 +89,8 @@ class CWFileReader {
           int colId = i % 4;
           ss += ("SQ:$i c=$c [$rowId, $colId]");
           print(ss);
-          NYCWSq(rowId, colId, c == "-", c);
+          NYCWSq(rowId, colId, c == "-",
+              'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.contains(c), c);
         }
       }
     }

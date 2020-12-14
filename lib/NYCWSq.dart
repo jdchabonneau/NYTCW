@@ -45,6 +45,7 @@ class NYCWSq extends StatefulWidget {
   final int colId;
   bool isInError = false;
   bool isUnused = false;
+  bool isCircled = false;
   bool isHilighted = false;
   bool isSelected = false;
   bool wasExposed = false;
@@ -55,7 +56,8 @@ class NYCWSq extends StatefulWidget {
   String displayChar = " ";
   String char = " ";
 
-  NYCWSq(this.rowId, this.colId, this.isUnused, this.char) {
+  NYCWSq(this.rowId, this.colId, this.isUnused, this.isCircled, this.char) {
+    char = char.toUpperCase();
     squares.add(this);
     // if (squares.length == 1 ||
     //     squares.length == 5 ||
@@ -198,6 +200,7 @@ class _NYCWSqState extends State<NYCWSq> {
       child: Stack(
         children: [
           buildBox(),
+          widget.isCircled ? buildCircle() : Text(""),
           widget.isInError && !widget.isUnused
               ? diagonalStrikethrough(ss)
               : Container(),
@@ -211,6 +214,19 @@ class _NYCWSqState extends State<NYCWSq> {
                 )
               : Container(),
         ],
+      ),
+    );
+  }
+
+  Container buildCircle() {
+    return Container(
+      //alignment: FractionalOffset(99.5, 99.5),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.red.withOpacity(0.5),
+          width: NYCWSq.width * .50,
+        ),
+        shape: BoxShape.circle,
       ),
     );
   }

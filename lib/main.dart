@@ -136,8 +136,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var nn = CWFileReader();
-    nn.parseFile("");
+    var parser = CWFileReader();
+    parser.parseFile("");
     return Scaffold(
       appBar: AppBar(
         title:
@@ -164,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[NYCWGrid(4, 4), CWHintBar(), CWKB()],
+          children: <Widget>[NYCWGrid(7, 7), CWHintBar(), CWKB()],
         ),
       ),
       // floatingActionButton: FloatingActionButton(
