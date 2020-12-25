@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'NYCWSq.dart';
 
-class CWHintBar extends StatelessWidget {
+class CWHintBar extends StatefulWidget {
+  String hint = "ppp";
+  @override
+  _CWHintBarState createState() => _CWHintBarState();
+}
+
+class _CWHintBarState extends State<CWHintBar> {
   @override
   Widget build(BuildContext context) {
 //    return Text("oo");
@@ -32,7 +38,7 @@ class CWHintBar extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * .55,
                     child: (Text(
 //                      "aBobby stutters stutters stutters stutters stutters A aBobby stutters stutters stutters stutters stutters A aBobby stutters stutters stutters stutters stutters A stutters B stutters C stutters D stutters ",
-                      "aBubby A aBoutters stutters stutters",
+                      widget.hint, //"aBubby A aBoutters stutters stutters",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
                       style: TextStyle(
@@ -58,6 +64,18 @@ class CWHintBar extends StatelessWidget {
 
 class CWKB extends StatelessWidget {
   int ind;
+  @override
+  Widget build(BuildContext context) {
+//    return Text("oo");
+    return Container(
+        //color: Colors.blue,
+        child: Column(children: [
+      keyRow("qwertyuiop"),
+      keyRow("asdfghjkl"),
+      keyRow(".zxcvbnm<"),
+    ]));
+  }
+
   Widget keyRow(String s) {
     List<Widget> l = List<Widget>();
     s = s.toUpperCase();
@@ -102,17 +120,5 @@ class CWKB extends StatelessWidget {
       //color: Colors.pink,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: l),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-//    return Text("oo");
-    return Container(
-        //color: Colors.blue,
-        child: Column(children: [
-      keyRow("qwertyuiop"),
-      keyRow("asdfghjkl"),
-      keyRow(".zxcvbnm<"),
-    ]));
   }
 }

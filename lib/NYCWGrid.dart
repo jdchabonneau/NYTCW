@@ -67,11 +67,11 @@ class NYCWGrid extends StatelessWidget {
         //print("v");
         // var v = NYCWSq.squares[rowID * numCols + index];
         //var y = v.colId;
-        var c = this.parser.wordsMap[1];
-        var cv = this.parser.wordsMap.values;
-        print(cv);
-        var cvv = cv.first;
-        print(cvv);
+        // var c = this.parser.wordsMap[1];
+        // var cv = this.parser.wordsMap.values;
+        // print(cv);
+        // var cvv = cv.first;
+        // print(cvv);
         //var y = v.colId;
         //print("rowID: $rowID : " + v.toString() + y.toString());
 
@@ -79,8 +79,8 @@ class NYCWGrid extends StatelessWidget {
 //        print(
         //          "NYCWSq(rowID=$rowID, index=$index, z =${v.isUnused}, ${v.char})");
         //return Text("abc d-");
-        return NYCWSq.squares[rowID * 4 + index];
-        //return NYCWSq(rowID, index, true, c);
+        //    return NYCWSq.squares[rowID * 4 + index];
+        return NYCWSq(rowID, index, (rowID + index) == 0, false, 'c');
       }),
     );
   }
