@@ -40,10 +40,10 @@ class CWFileReader {
 //    var i = ss.length;
 //    var s1 = ss[0];
 //    var s2 = ss[1];
-    var s3 = fileSections[2];
+    var wordSection = fileSections[2];
     var hintSection = fileSections[3];
     //  var comment = s[1].trim();
-    List<String> wordsAcrossWithNums = s3.split(";");
+    List<String> wordsAcrossWithNums = wordSection.split(";");
 
     parseWords(wordsAcrossWithNums);
     parseHints(hintSection);
@@ -81,9 +81,9 @@ class CWFileReader {
         print(
             "lineInfo=$lineInfo ${num_word.length} xx[0]=${num_word[0]} xx[1]=${num_word[1]}");
         wordsMap[int.parse(num_word[0])] = num_word[1];
-
-        for (int i = 0; i < num_word[1].length; i++) {
-          String c = num_word[1][i];
+        int j = NYCWSq.squares.length % boardSize;
+        for (int i = j; i < num_word[1].length + j; i++) {
+          String c = num_word[1][i - j];
 
           int rowId = NYCWSq.squares.length ~/ boardSize;
           //      int colId = rowId % 4;

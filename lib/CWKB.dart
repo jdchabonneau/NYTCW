@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'NYCWSq.dart';
 
 class CWHintBar extends StatefulWidget {
-  String hint = "ppp";
+  String hint = "";
   @override
   _CWHintBarState createState() => _CWHintBarState();
 }

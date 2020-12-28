@@ -65,7 +65,7 @@ class NYCWGrid extends StatelessWidget {
       children: List.generate(numCols, (index) {
         //int z = _random.nextInt(100);
         //print("v");
-        // var v = NYCWSq.squares[rowID * numCols + index];
+        return NYCWSq.squares[rowID * numCols + index];
         //var y = v.colId;
         // var c = this.parser.wordsMap[1];
         // var cv = this.parser.wordsMap.values;
@@ -80,7 +80,7 @@ class NYCWGrid extends StatelessWidget {
         //          "NYCWSq(rowID=$rowID, index=$index, z =${v.isUnused}, ${v.char})");
         //return Text("abc d-");
         //    return NYCWSq.squares[rowID * 4 + index];
-        return NYCWSq(rowID, index, (rowID + index) == 0, false, 'c');
+        //return NYCWSq(rowID, index, (rowID + index) == 0, false, 'u');
       }),
     );
   }

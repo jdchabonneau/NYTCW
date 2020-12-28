@@ -77,8 +77,7 @@ Info:Info goes here
 10:--ego--;
 11:drfauci;
 15:moonlit;
-16:vex-;
-17:ins;
+16:vex-;17:ins;
 ^6
 1A:Lifelong pal
 1D:Some undergrad degrees

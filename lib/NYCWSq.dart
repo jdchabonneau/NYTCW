@@ -72,6 +72,9 @@ class NYCWSq extends StatefulWidget {
       print(e);
       // TODO
     }
+    if (this.isUnused) {
+      this.char = "";
+    }
     this.displayChar = this.char;
   }
 
@@ -192,9 +195,9 @@ class _NYCWSqState extends State<NYCWSq> {
           colorSquares(s);
         }
         if (NYCWSq.doingRows) {
-          highlightRow(widget.rowId, widget);
+          highlightRow(widget);
         } else {
-          highlightColumn(widget.colId, widget);
+          highlightColumn(widget);
         }
       },
       child: Stack(
@@ -290,30 +293,74 @@ class _NYCWSqState extends State<NYCWSq> {
     );
   }
 
-  void highlightColumn(int colId, NYCWSq selectedSquare) {
-//    setState(() {
+  void highlightColumn(NYCWSq selectedSquare) {
     for (var s in NYCWSq.squares) {
       if (s.isUnused) {
         s.c = NYCWSq.unusedColor;
         continue;
       }
 
-      if (s != selectedSquare) if (s.colId == colId) {
-        s.c = NYCWSq.selectedRowColor;
-        s.isHilighted = true;
-//        s.c = Colors.amber;
-//        print("yes: ${s.colId}, ${s.rowId}");
-      } else {
-        s.c = NYCWSq.normalColor;
-        s.isHilighted = false;
-        //      print("no: ${s.colId}, ${s.rowId}");
+      if (s != selectedSquare) {
+        var smCol = sameColumn(s, selectedSquare);
+        print(
+            "smCol = $smCol, col=${s.colId} - ${selectedSquare.colId}, s.rowId=${s.rowId} - ${selectedSquare.rowId})");
+        if (sameColumn(s, selectedSquare)) {
+          s.c = NYCWSq.selectedRowColor;
+          s.isHilighted = true;
+        } else {
+          s.c = NYCWSq.normalColor;
+          s.isHilighted = false;
+        }
+        s.callBackSetState();
       }
-      s.callBackSetState();
     }
-    //  });
   }
 
-  void highlightRow(int rowId, NYCWSq selectedSquare) {
+  bool sameColumn(NYCWSq sq1, sq2) {
+    if (sq1.colId != sq2.colId) return false;
+    List<int> t2 = getRowBorders(sq1);
+    var c1 = 0;
+    var c2 = 0;
+
+    for (int i = 0; i < t2.length; i++) {
+      if (sq1.rowId > t2[i]) c1 = i + 1;
+      if (sq2.rowId > t2[i]) c2 = i + 1;
+    }
+    return c1 == c2;
+  }
+
+  bool sameRow(NYCWSq sq1, sq2) {
+    if (sq1.rowId != sq2.rowId) return false;
+    List<int> t2 = getColBorders(sq1);
+    var c1 = 0;
+    var c2 = 0;
+
+    for (int i = 0; i < t2.length; i++) {
+      if (sq1.colId > t2[i]) c1 = i + 1;
+      if (sq2.colId > t2[i]) c2 = i + 1;
+    }
+    return c1 == c2;
+  }
+
+  List<int> getRowBorders(NYCWSq sq1) {
+    var borders =
+        NYCWSq.squares.where((sq) => sq.isUnused && sq.colId == sq1.colId);
+    var tt = borders.map((e) => e.rowId);
+    List<int> t2 = tt.toList();
+    t2.sort();
+    return t2;
+  }
+
+  List<int> getColBorders(NYCWSq sq1) {
+    var borders =
+        NYCWSq.squares.where((sq) => sq.isUnused && sq.rowId == sq1.rowId);
+    var tt = borders.map((e) => e.colId);
+    List<int> t2 = tt.toList();
+    t2.sort();
+    return t2;
+  }
+
+  void highlightRow(NYCWSq selectedSquare) {
 //    setState(() {
     for (var s in NYCWSq.squares) {
       if (s.isUnused) {
@@ -322,14 +369,19 @@ class _NYCWSqState extends State<NYCWSq> {
         s.callBackSetState();
         continue;
       }
-      if (s != selectedSquare) if (s.rowId == rowId) {
-        s.c = NYCWSq.selectedRowColor;
-        // print("yes: ${s.colId}, ${s.rowId}");
-      } else {
-        s.c = NYCWSq.normalColor;
-        //print("no: ${s.colId}, ${s.rowId}");
+      if (s != selectedSquare) {
+        var smRow = sameColumn(s, selectedSquare);
+        print(
+            "smCol = $smRow, col=${s.colId} - ${selectedSquare.colId}, s.rowId=${s.rowId} - ${selectedSquare.rowId})");
+        if (sameRow(s, selectedSquare)) {
+          s.c = NYCWSq.selectedRowColor;
+          s.isHilighted = true;
+        } else {
+          s.c = NYCWSq.normalColor;
+          s.isHilighted = false;
+        }
+        s.callBackSetState();
       }
-      s.callBackSetState();
     }
     //});
   }
