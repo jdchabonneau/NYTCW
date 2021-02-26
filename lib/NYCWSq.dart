@@ -31,8 +31,8 @@ class TrianglePainter extends CustomPainter {
 }
 
 class NYCWSq extends StatefulWidget {
-  static final squares = List<NYCWSq>();
   static bool doingRows = true;
+  static List<NYCWSq> squares = List<NYCWSq>();
 
   static Color normalColor = Colors.grey;
   static Color unusedColor = Colors.black;
@@ -75,7 +75,7 @@ class NYCWSq extends StatefulWidget {
     if (this.isUnused) {
       this.char = "";
     }
-    this.displayChar = this.char;
+    this.displayChar = " "; // this.char;
   }
 
   void assignNumber() {
@@ -92,13 +92,18 @@ class NYCWSq extends StatefulWidget {
     }
   }
 
+// String getHintNums(){
+//   var top = TopOfColumn();
+//   if (top.)
+// }
+
   NYCWSq atRowCol(int rowId, int colId) {
-    var ss = "";
-    print("atRowCol($rowId, $colId) -- length=${squares.length}");
-    for (var s in NYCWSq.squares) {
-      ss += ("[${s.rowId}, ${s.colId}]");
-    }
-    print(ss);
+    // var ss = "";
+    // print("atRowCol($rowId, $colId) -- length=${squares.length}");
+    // for (var s in NYCWSq.squares) {
+    //   ss += ("[${s.rowId}, ${s.colId}]");
+    // }
+    // print(ss);
     for (var s in NYCWSq.squares) {
       if (s.rowId == rowId && s.colId == colId) {
         return s;
@@ -113,6 +118,32 @@ class NYCWSq extends StatefulWidget {
     var jj = atRowCol(rowId - 1, colId);
     return jj.isUnused;
 //    return atRowCol(rowId - 1, colId).isUnused;
+  }
+
+  int startRowIndex() {
+    int i = colId;
+    while (i > -1) {
+      var square = atRowCol(rowId, i);
+      if (square.isUnused) {
+        return i + 1;
+      }
+      i = i - 1;
+    }
+    return 0;
+  }
+
+  String hintNum(bool wantAcross) {}
+
+  int startColIndex() {
+    int i = rowId;
+    while (i > -1) {
+      var square = atRowCol(i, colId);
+      if (square.isUnused) {
+        return i + 1;
+      }
+      i = i - 1;
+    }
+    return 0;
   }
 
   bool startOfRow() {
@@ -173,7 +204,7 @@ class _NYCWSqState extends State<NYCWSq> {
             (sqrt(NYCWSq.squares.length) + 1.5));
 //    double height = MediaQuery.of(context).size.height;
     double ss = sqrt((NYCWSq.width * NYCWSq.width) * 1.8);
-    widget.cs = (a, b) {
+    widget.cs = (a) {
       colorSquares(a);
     };
     widget.callBackSetState = () {
@@ -188,7 +219,7 @@ class _NYCWSqState extends State<NYCWSq> {
         if (widget.c == NYCWSq.selectedColor) {
           NYCWSq.doingRows = !NYCWSq.doingRows;
         }
-
+        print("r:${widget.startColIndex()}, c:${widget.startRowIndex()}");
 //        print('Card tapped.' + NYCWSq.squares.length.toString());
         //int n = 0;
         for (var s in NYCWSq.squares) {
@@ -196,6 +227,7 @@ class _NYCWSqState extends State<NYCWSq> {
         }
         if (NYCWSq.doingRows) {
           highlightRow(widget);
+          displayHint();
         } else {
           highlightColumn(widget);
         }
@@ -302,8 +334,8 @@ class _NYCWSqState extends State<NYCWSq> {
 
       if (s != selectedSquare) {
         var smCol = sameColumn(s, selectedSquare);
-        print(
-            "smCol = $smCol, col=${s.colId} - ${selectedSquare.colId}, s.rowId=${s.rowId} - ${selectedSquare.rowId})");
+        // print(
+        //     "smCol = $smCol, col=${s.colId} - ${selectedSquare.colId}, s.rowId=${s.rowId} - ${selectedSquare.rowId})");
         if (sameColumn(s, selectedSquare)) {
           s.c = NYCWSq.selectedRowColor;
           s.isHilighted = true;
@@ -360,6 +392,8 @@ class _NYCWSqState extends State<NYCWSq> {
     return t2;
   }
 
+  void displayHint() {}
+
   void highlightRow(NYCWSq selectedSquare) {
 //    setState(() {
     for (var s in NYCWSq.squares) {
@@ -371,8 +405,8 @@ class _NYCWSqState extends State<NYCWSq> {
       }
       if (s != selectedSquare) {
         var smRow = sameColumn(s, selectedSquare);
-        print(
-            "smCol = $smRow, col=${s.colId} - ${selectedSquare.colId}, s.rowId=${s.rowId} - ${selectedSquare.rowId})");
+        // print(
+        //     "smCol = $smRow, col=${s.colId} - ${selectedSquare.colId}, s.rowId=${s.rowId} - ${selectedSquare.rowId})");
         if (sameRow(s, selectedSquare)) {
           s.c = NYCWSq.selectedRowColor;
           s.isHilighted = true;
@@ -392,6 +426,7 @@ class _NYCWSqState extends State<NYCWSq> {
         s.c = NYCWSq.unusedColor;
         return;
       }
+      s.displayChar = s.char;
       s.isSelected = (s == widget);
       if (s.isSelected) {
         s.c = NYCWSq.selectedColor;

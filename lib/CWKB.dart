@@ -4,8 +4,17 @@ import 'NYCWSq.dart';
 
 class CWHintBar extends StatefulWidget {
   String hint = "";
+  static int defIndex = 0;
+  static Map definitions = Map();
+  Function callBackSetState;
+
   @override
   _CWHintBarState createState() => _CWHintBarState();
+}
+
+String definition(NYCWSq s, bool isAccros) {
+  return CWHintBar
+      .definitions[CWHintBar.definitions.keys.toList()[CWHintBar.defIndex++]];
 }
 
 class _CWHintBarState extends State<CWHintBar> {
@@ -28,6 +37,14 @@ class _CWHintBarState extends State<CWHintBar> {
                   Center(
                     child: IconButton(
                       onPressed: () {
+                        setState(() {
+                          widget.hint = CWHintBar.definitions[CWHintBar
+                              .definitions.keys
+                              .toList()[CWHintBar.defIndex++]];
+
+                          //widget.hint = CWHintBar.definitions["1A"];
+                        });
+
                         print("Lefty!");
                       },
                       icon: Icon(Icons.arrow_left),
@@ -50,6 +67,14 @@ class _CWHintBarState extends State<CWHintBar> {
                   Center(
                     child: IconButton(
                       onPressed: () {
+                        setState(() {
+                          widget.hint = CWHintBar.definitions[CWHintBar
+                              .definitions.keys
+                              .toList()[CWHintBar.defIndex--]];
+
+                          //widget.hint = CWHintBar.definitions["1A"];
+                        });
+
                         print("Righty!");
                       },
                       icon: Icon(Icons.arrow_right),
@@ -76,8 +101,18 @@ class CWKB extends StatelessWidget {
     ]));
   }
 
+  Widget keyRow2(String s) {
+    return SizedBox(
+      child: Container(
+        color: Colors.blue,
+      ),
+      height: 15,
+      width: 20,
+    );
+  }
+
   Widget keyRow(String s) {
-    List<Widget> l = List<Widget>();
+    List<Widget> l;
     s = s.toUpperCase();
     List.generate(
       s.length,
@@ -85,7 +120,7 @@ class CWKB extends StatelessWidget {
         InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: () {
-            print(s[index]);
+            //print("s[index] = ${s[index]}");
             NYCWSq.changeDispChar(s[index]);
           },
           child: Container(
@@ -108,6 +143,7 @@ class CWKB extends StatelessWidget {
             child: SizedBox(
               height: 30,
               width: 30,
+              //child: Center(child: Text(s[index])),
               child: Center(child: Text(s[index])),
             ),
           ),

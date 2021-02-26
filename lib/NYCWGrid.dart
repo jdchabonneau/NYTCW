@@ -13,33 +13,14 @@ class NYCWGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //return aa1(3, 3);
+
+    // ChangeNotifierProvider(
+    //   create: (context) => NYCWBloc(),
+    //   child: drawGrid(),
+    // );
+
     return drawGrid();
     // Text("NYCWGrid");
-  }
-
-  Widget drawGrid3() {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      Container(
-        height: 66,
-        color: Colors.blue,
-      ),
-      Container(
-        height: 55,
-        color: Colors.green,
-      ),
-      Container(
-        height: 55,
-        color: Colors.yellow,
-      ),
-      Container(
-        height: 55,
-        color: Colors.pink,
-      ),
-      Container(
-        height: 55,
-        color: Colors.orange,
-      ),
-    ]);
   }
 
   Widget drawGrid() {
@@ -49,7 +30,9 @@ class NYCWGrid extends StatelessWidget {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: List.generate(numRows, (index) {
+          print("go: $index");
           var rt = makeRow(index);
+          print("back");
           return rt;
         }));
   }
@@ -65,6 +48,9 @@ class NYCWGrid extends StatelessWidget {
       children: List.generate(numCols, (index) {
         //int z = _random.nextInt(100);
         //print("v");
+        print("NYCWSq.squares[$rowID * $numCols + $index]");
+        var j = NYCWSq.squares[rowID * numCols + index];
+        print("j OK");
         return NYCWSq.squares[rowID * numCols + index];
         //var y = v.colId;
         // var c = this.parser.wordsMap[1];

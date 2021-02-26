@@ -65,6 +65,44 @@ vex-ins;
   }
 }
 
+class Jan092021 {
+  static List<String> jjj() {
+    var s = ''' 
+^
+Info:Info goes here 
+^
+1:--fit--;
+4:thanos-;
+7:warnock;
+9:one-;10:tri;
+11:anagram;
+13:mashup-;
+14:--tie--;
+^
+1A:In Good Shape
+1D:Region for China, Japan, South Korea, etc.
+2D:Bed-and-breakfast
+3D:"Sadly, you're right"
+4A:Supervillain in the Avengers movies
+4D:120 minutes after midnight
+5D:___-Barbera, creator of Yogi Bear and Scooby-Doo
+6D:Bit of paper
+7A:Raphael ___, first Black senator from Georgia
+8D:Middle Kardashian sister
+9A:Number of Q tiles in a Scrabble bag
+10A:Prefix with cycle
+11A:"Bad credit" for "debit card," aptly enough
+12D:Letters below 4 on a phone
+13A:Musical mix
+14A:Even score
+''';
+    var ss = s.split("^");
+//var ss = '''^abb**c**dead head'''.split("**");
+
+    return ss;
+  }
+}
+
 class DNums {
   static List<String> jjj() {
     var s = ''' 
